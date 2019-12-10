@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
-import Nav from './components/Nav'
-import Wrapper from './components/Ｗrapper'
-import Footer from './components/Footer'
+import Nav from './Components/Nav'
+import Wrapper from './Components/Wrapper'
+import Footer from './Components/Footer'
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 
