@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Segment, Menu, Icon } from 'semantic-ui-react'
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 const Tab = ({to, name, active, onClick, icon}) => (
   <Menu.Item
