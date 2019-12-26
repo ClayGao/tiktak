@@ -1,22 +1,22 @@
-import { GET_WEATHER_DATA, GET_WEATHER_DATA_SUCCESS} from '../actions/actionTypes'
+import { GET_TODOLIST_DATA, GET_TODOLIST_DATA_SUCCESS } from '../actions/actionTypes'
 
 const initState = {
     isLoading: false,
-    weatherData : [],
+    todolistData : [],
 }
 
-export const getWeatherDataReducer = (state = initState, action) => {
+export const getTodolistDataReducer = (state = initState, action) => {
     switch(action.type) {
-        case GET_WEATHER_DATA:
+        case GET_TODOLIST_DATA:
             return {
                 ...state,
                 isLoading: true
             }
-        case GET_WEATHER_DATA_SUCCESS:
+        case GET_TODOLIST_DATA_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
-                weatherData: action.data,
+                todolistData: action.data,
             }
         default:
             return state

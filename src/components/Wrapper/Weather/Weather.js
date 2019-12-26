@@ -1,41 +1,81 @@
 import React, { useState, useEffect } from 'react';
-import { Loader, Icon, Grid, Image } from 'semantic-ui-react'
 import styled from 'styled-components'
 
 // For weather
-const extra = (
-    <a>
-        <Icon name='user' />
-        16 Friends
-    </a>
-)
+const WeatherCard = (props) => {
 
-const Weather = (props) => {
-    const[weatherData, setWeatherData] = useState([])
-
-    const WeatherContent = styled.div`
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-    `
-    
     const WeatherCard = styled.div`
-        width: 200px;
-        height: 600px;
+        margin-top: 30px;
+        width: 250px;
+        height: 380px;
         border: 2px solid black;
     `
 
-    useEffect(()=> {
-        props.getWeatherData()
-    },[])
+    const WeatherImage = styled.div`
+        height: 260px;
+        background-color: pink;
+    `
 
-    console.log(props.weatherData)
+    const WeatherInfo = styled.div`
+        padding: 10px;
+        border-top: 2px solid black;
+    `
+
+    const WeatherInfo__Cityname = styled.div`
+        font-size: 20px;
+        font-weight: bolder;    
+    `
+
+    const WeatherInfo__Wind = styled.div`
+        margin-top: 3px;
+        font-size: 16px;
+    `
 
     return (
-        <WeatherContent>
-            <WeatherCard>
+        <WeatherCard>
+            <WeatherImage>
 
-            </WeatherCard>
+            </WeatherImage>
+            <WeatherInfo>
+                <WeatherInfo__Cityname>
+                    台北市
+                </WeatherInfo__Cityname>
+                <WeatherInfo__Wind>
+                    80%
+                </WeatherInfo__Wind>
+            </WeatherInfo>
+        </WeatherCard>
+    )
+}
+
+const Weather = (props) => {
+    const[weatherData, setWeatherData] = useState('')
+
+    const WeatherContent = styled.div`
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    `
+
+   useEffect(() => {
+       props.getWeatherData()
+   },[])
+   
+   
+
+    console.log(props.weatherData)
+    return (
+        <WeatherContent>
+            <WeatherCard />
+            <WeatherCard />
+            <WeatherCard />
+            <WeatherCard />
+            <WeatherCard />
+            <WeatherCard />
+            <WeatherCard />
+            <WeatherCard />
+            <WeatherCard />
+            <WeatherCard />
         </WeatherContent>
     )
 }

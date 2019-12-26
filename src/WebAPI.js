@@ -8,4 +8,5 @@ export const getWeatherDataAPI = () => {
     return axios(`https://opendata.cwb.gov.tw/fileapi/v1/opendataapi/${weatherDataId}?Authorization=${weatherAuth}&format=JSON`)
 }
 
-
+export const getTodolistDataAPI = () => axios('http://claygao.website/todolist/models/todo_API.php')
+//// http://claygao.website/todolist/models/todo_API.php <=== Todolist API

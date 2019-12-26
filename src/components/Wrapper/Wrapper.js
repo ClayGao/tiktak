@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Switch, Route, Link } from "react-router-dom";
 import Dashboard from './dashboard'
 import Weather from '../../containers/WeatherContainer'
-import Todolist from './todolist'
+import Todolist from '../../containers/TodolistContainer'
 import styled from 'styled-components'
 
 
