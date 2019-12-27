@@ -50,6 +50,8 @@ const WeatherCard = (props) => {
 
 const Weather = (props) => {
     const[weatherData, setWeatherData] = useState('')
+    const [testText, setTestText] = useState('')
+    const handleInputChange = (e) => setTestText(e.target.value)
 
     const WeatherContent = styled.div`
         display: flex;
@@ -60,22 +62,13 @@ const Weather = (props) => {
    useEffect(() => {
        props.getWeatherData()
    },[])
-   
-   
 
     console.log(props.weatherData)
     return (
         <WeatherContent>
-            <WeatherCard />
-            <WeatherCard />
-            <WeatherCard />
-            <WeatherCard />
-            <WeatherCard />
-            <WeatherCard />
-            <WeatherCard />
-            <WeatherCard />
-            <WeatherCard />
-            <WeatherCard />
+            <div>
+             <  input value={testText} onChange={handleInputChange} text="type" />
+            </div>
         </WeatherContent>
     )
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Switch, Route, Link } from "react-router-dom";
-import Dashboard from './dashboard'
+import Dashboard from '../../containers/DashboardContainer'
 import Weather from '../../containers/WeatherContainer'
 import Todolist from '../../containers/TodolistContainer'
 import styled from 'styled-components'
@@ -9,7 +9,7 @@ import styled from 'styled-components'
 const Wrapper = () => {
 
     const MainContent = styled.div`
-        margin: 30px;
+        
     `
 
     return (
