@@ -19,6 +19,9 @@ const mapDispatchToProps = (dispatch) => {
       getTodolistData : () => {dispatch(actions.getTodolistData())},
       postTodolistData : (inputData) => {
         dispatch(actions.postTodolistData(inputData))
+      },
+      deleteTodolistData : (taskId) => {
+        dispatch(actions.deleteTodolistData(taskId))
       }
     }
 }

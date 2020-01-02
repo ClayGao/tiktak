@@ -133,6 +133,8 @@ const TodolistEditingBlock = (props) => {
     const [taskInput, setTaskInput] = useState({
         todoTitle: '',
         todoContext: '',
+        todoPlace: '',
+        todoSubPlace: '',
         todoLevel: 'common',
         todoStatus: 0,
     })
@@ -147,11 +149,30 @@ const TodolistEditingBlock = (props) => {
 
     console.log({...taskInput})
 
-    const genderOptions = [
-        { key: 'm', text: 'Male', value: 'male' },
-        { key: 'f', text: 'Female', value: 'female' },
-        { key: 'o', text: 'Other', value: 'other' },
-      ]
+    const options = [
+            { text: '基隆市', value: '基隆市'},	
+            { text: '嘉義市', value: '嘉義市'},	
+            { text: '臺北市', value: '臺北市'},	
+            { text: '新北市', value: '新北市'},	
+            { text: '嘉義縣', value: '嘉義縣'},	
+            { text: '台南市', value: '台南市'},	
+            { text: '桃園縣', value: '桃園縣'},	
+            { text: '高雄市', value: '高雄市'},	
+            { text: '新竹市', value: '新竹市'},	
+            { text: '屏東縣', value: '屏東縣'},	
+            { text: '新竹縣', value: '新竹縣'},	
+            { text: '台東縣', value: '台東縣'},	
+            { text: '苗栗縣', value: '苗栗縣'},	
+            { text: '花蓮縣', value: '花蓮縣'},	
+            { text: '臺中市', value: '臺中市'},	
+            { text: '宜蘭縣', value: '宜蘭縣'},	
+            { text: '彰化縣', value: '彰化縣'},	
+            { text: '澎湖縣', value: '澎湖縣'},	
+            { text: '南投縣', value: '金門縣'},	
+            { text: '雲林縣', value: '雲林縣'},	
+            { text: '連江縣', value: '連江縣'},	
+    ]        
+            
 
     return (
         <BeMiddle>
@@ -181,37 +202,57 @@ const TodolistEditingBlock = (props) => {
                         value={taskInput.todoContext}
                     />
                     <Form.Group inline>
-                    <label>Quantity</label>
-                    <Form.Field
-                        control={Radio}
-                        label='Common'
-                        value='common'
-                        name="todoLevel"
-                        checked={taskInput.todoLevel === 'common'}
-                        onChange={handleInputChange}
-                    />
-                    <Form.Field
-                        control={Radio}
-                        label='Important'
-                        value='important'
-                        name="todoLevel"
-                        checked={taskInput.todoLevel === 'important'}
-                        onChange={handleInputChange}
-                    />
-                    <Form.Field
-                        control={Radio}
-                        label='Record'
-                        value='record'
-                        name="todoLevel"
-                        checked={taskInput.todoLevel === 'record'}
-                        onChange={handleInputChange}
-                    />
+                        <label>Quantity</label>
+                        <Form.Field
+                            control={Radio}
+                            label='Common'
+                            value='common'
+                            name="todoLevel"
+                            checked={taskInput.todoLevel === 'common'}
+                            onChange={handleInputChange}
+                        />
+                        <Form.Field
+                            control={Radio}
+                            label='Important'
+                            value='important'
+                            name="todoLevel"
+                            checked={taskInput.todoLevel === 'important'}
+                            onChange={handleInputChange}
+                        />
+                        <Form.Field
+                            control={Radio}
+                            label='Record'
+                            value='record'
+                            name="todoLevel"
+                            checked={taskInput.todoLevel === 'record'}
+                            onChange={handleInputChange}
+                        />
+                    </Form.Group>
+                    <Form.Group >
+                        <Form.Select 
+                            options={options} 
+                            placeholder='Place' 
+                            onChange={handleInputChange}
+                            value={taskInput.todoPlace}
+                        />
+                        <Form.Field
+                            id='form-input-control-road-name'
+                            control={Input}
+                            label='Road name'
+                            placeholder='Remember to do it!'
+                            name="todoSubPlace"
+                            onChange={handleInputChange}
+                            value={taskInput.todoSubPlace}
+                        />
                     </Form.Group>
                     <Form.Field
                         id='form-button-control-public'
                         control={Button}
                         content='Send'
-                        onClick={()=>props.handlePost(taskInput)}
+                        onClick={()=>{
+                            props.handlePost(taskInput)
+                            props.handleEditing()
+                        }}
                     />
                     <Form.Field
                         id='form-button-control-public'
@@ -227,9 +268,17 @@ const TodolistEditingBlock = (props) => {
 
 
 const TodolistCard = (props) => {
+    //console.log(props)
+    const deleteButton = <Button animated='vertical' 
+        onClick={()=>props.handleDelete(props.todoId)}>
+        <Button.Content hidden>Delete</Button.Content>
+        <Button.Content visible>
+            <Icon name='delete' />
+        </Button.Content>
+    </Button> 
 
     return (
-        <TodolistCardContent>
+        <TodolistCardContent id={props.todoID}>
             <TodolistTitle>
                 {props.todoTitle}
             </TodolistTitle>
@@ -243,12 +292,7 @@ const TodolistCard = (props) => {
                         <Icon name='edit' />
                     </Button.Content>
                 </Button>
-                <Button animated='vertical'>
-                    <Button.Content hidden>Delete</Button.Content>
-                    <Button.Content visible>
-                        <Icon name='delete' />
-                    </Button.Content>
-                </Button>
+                {props.isComplete ? deleteButton : null /* 還需做 Compelete 按鈕 */} 
                 <Button animated='vertical'>
                     <Button.Content hidden>Position</Button.Content>
                     <Button.Content visible>
@@ -272,16 +316,21 @@ const Todolist = (props) => {
         props.postTodolistData(inputTask)
     }
     
-    const todolistData = props.todolistData.data
+    const handleDelete = (taskId) => {
+        props.deleteTodolistData(taskId)
+    }
+
 
     useEffect(() => {
         props.getTodolistData()
     },[])
 
-    
+    const todolistData = props.todolistData.data
+
+
 
     
-    console.log(props)
+    console.log(props.todolistData.data)
 
     return (
         <TodolistWrapper isInputing={isInputing}>
@@ -289,13 +338,15 @@ const Todolist = (props) => {
         <TodolistBlockContent>
             <TodolistBar handleEditing={handleEditing} isInputing={isInputing} />
             <TodoBlock>
-                <input type="button" onClick={()=>{handlePost('ar')}} />
                 {!todolistData? 'loading' : 
                     todolistData.map(item=>{
                         if(!item.todoStatus) {
                             return (<TodolistCard
+                                isComplete={item.todoStatus}
+                                todoId={item.todoID}
                                 todoTitle={item.todoTitle}
                                 todoContext={item.todoComment}
+                                handleDelete={handleDelete}
                             />)
                         }
                     })}
@@ -305,8 +356,11 @@ const Todolist = (props) => {
                     todolistData.map(item=>{
                         if(item.todoStatus) {
                             return ( <TodolistCard
+                                isComplete={item.todoStatus}
+                                todoId={item.todoID}
                                 todoTitle={item.todoTitle}
                                 todoContext={item.todoComment}
+                                handleDelete={handleDelete}
                             />)
                         }
                     })}

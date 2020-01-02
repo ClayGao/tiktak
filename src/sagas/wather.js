@@ -3,7 +3,8 @@ import * as actionTypes from '../actions/actionTypes'
 import { 
     weatherSaga,
     getTodolistSaga,
-    postTodolistSaga
+    postTodolistSaga,
+    deleteTodolistSaga
 } from './saga'
 
 export function* watchWeatherSaga() {
@@ -16,6 +17,10 @@ export function* watchGetTodolistSaga() {
 
 export function* watchPostTodolistSaga() {
     yield takeEvery(actionTypes.POST_TODOLIST_DATA, postTodolistSaga)
+}
+
+export function* watchDeleteTodolistSaga() {
+    yield takeEvery(actionTypes.DELETE_TODOLIST_DATA, deleteTodolistSaga)
 }
 
 

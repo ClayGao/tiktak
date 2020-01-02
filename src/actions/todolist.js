@@ -25,3 +25,16 @@ export const postTodolistDataDone = () => {
         type: actionTypes.POST_TODOLIST_DATA_SUCCESS,
     }
 }
+
+export const deleteTodolistData = (taskId) => {
+    return {
+        type: actionTypes.DELETE_TODOLIST_DATA,
+        data: taskId
+    }
+}
+
+export const deleteTodolistDataDone = () => {
+    return {
+        type: actionTypes.DELETE_TODOLIST_DATA_SUCCESS
+    }
+}

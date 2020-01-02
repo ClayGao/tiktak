@@ -1,4 +1,4 @@
-import {put, call, fork, take} from 'redux-saga/effects'
+import {put, call, fork, take, takeLatest} from 'redux-saga/effects'
 import * as WebAPI from '../WebAPI'
 import * as weatherActions from '../actions/weather'
 import * as todolistActions from '../actions/todolist'
@@ -7,7 +7,7 @@ import * as todolistActions from '../actions/todolist'
 export function* weatherSaga() {
     const weatherData = yield call(
         () => WebAPI.getWeatherDataAPI()
-    )
+    ) 
     yield put(weatherActions.getWeatherDataDone(weatherData))
 }
 
@@ -17,16 +17,18 @@ export function* getTodolistSaga() {
     // 這邊是寫成 action creater 的回傳，也可直接寫 action 物件 { }
 }
 
+// 當 watcher 的 POST_TODOLIST_DATA 觸發時，
+// 後續要執行的函式會自動帶上 action 參數
+export function* postTodolistSaga(action) {
+    yield call(WebAPI.postTodolistDataAPI, action.data)
+    yield put(todolistActions.postTodolistDataDone())  
+    // 再次觸發 watcher 使其重新發 ajax
+    yield put(todolistActions.getTodolistData()) 
+}
 
-export function* postTodolistSaga() {
-    const actionPost = yield take('POST_TODOLIST_DATA')
-    console.log('0')
-    // 獲取 action 內中的 data
-    //const actionPost = yield take('POST_TODOLIST_DATA')
-    //console.log(actionPost)
-    //yield fork(WebAPI.postTodolistDataAPI, actionPost.data)
-    console.log('2')
-    yield put(todolistActions.postTodolistDataDone())
-    alert('3')
-    
+export function* deleteTodolistSaga(action) {
+    console.log(action.data)
+    yield call(WebAPI.deleteTodolistDataAPI, action.data)
+    // 再次觸發 watcher 使其重新發 ajax
+    yield put(todolistActions.getTodolistData())
 }
