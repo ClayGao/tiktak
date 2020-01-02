@@ -1,4 +1,5 @@
 import axios from 'axios'
+import qs from 'qs' // 解決後端 php 不能接收 JSON 的問題
 
 export const getWeatherDataAPI = () => {
 
@@ -9,4 +10,7 @@ export const getWeatherDataAPI = () => {
 }
 
 export const getTodolistDataAPI = () => axios('http://claygao.website/todolist/models/todo_API.php')
+
+export const postTodolistDataAPI = (inputData) => axios.post('http://claygao.website/todolist/models/todo_API.php', qs.stringify(inputData))
+
 //// http://claygao.website/todolist/models/todo_API.php <=== Todolist API

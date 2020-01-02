@@ -1,13 +1,15 @@
 import { all } from 'redux-saga/effects';
 import  { 
   watchWeatherSaga,
-  watchTodolistSaga
+  watchGetTodolistSaga,
+  watchPostTodolistSaga
 } from './wather'
 
 function* rootSaga() {
   yield all([
     watchWeatherSaga(),
-    watchTodolistSaga()
+    watchGetTodolistSaga(),
+    watchPostTodolistSaga()
   ]);
 }
 

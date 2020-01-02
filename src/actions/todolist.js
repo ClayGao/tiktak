@@ -12,3 +12,16 @@ export const getTodolistDataDone = (data) => {
         data
     }
 }
+
+export const postTodolistData = (data) => {
+    return {
+        type: actionTypes.POST_TODOLIST_DATA,
+        data
+    }
+}
+
+export const postTodolistDataDone = () => {
+    return {
+        type: actionTypes.POST_TODOLIST_DATA_SUCCESS,
+    }
+}

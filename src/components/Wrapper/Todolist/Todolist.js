@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Loader, Form, TextArea, Button, Input, Icon, Select } from 'semantic-ui-react'
+import { Loader, Form, TextArea, Button, Input, Icon, Radio } from 'semantic-ui-react'
 import styled from 'styled-components'
+import  * as WebAPI from '../../../WebAPI'
+
 
 // main
 
@@ -114,20 +116,6 @@ const TodolistEditingContent = styled.div`
 
 const TodolistBar = (props) => {
 
-    const [taskInput, setTaskInput] = useState({
-        taskTitle: '',
-        taskContent: '',
-        taskLevel: '',
-        taskStatus: 0,
-    })
-
-    const handleInputChange = (e) => setTaskInput({
-        ...taskInput,
-        [e.currentTarget.name]: e.currentTarget.value
-    })
-
-    console.log(taskInput)
-
     return (
         <TodolistBarContent>
             <Button animated='vertical' onClick={props.handleEditing}>
@@ -142,6 +130,23 @@ const TodolistBar = (props) => {
 
 const TodolistEditingBlock = (props) => {
 
+    const [taskInput, setTaskInput] = useState({
+        todoTitle: '',
+        todoContext: '',
+        todoLevel: 'common',
+        todoStatus: 0,
+    })
+
+    // 利用 props 傳下來的 name 與 value 取代 e.target
+    const handleInputChange = (e, {name, value}) => setTaskInput({
+        ...taskInput,
+        [name]: value
+    })
+
+  
+
+    console.log({...taskInput})
+
     const genderOptions = [
         { key: 'm', text: 'Male', value: 'male' },
         { key: 'f', text: 'Female', value: 'female' },
@@ -152,50 +157,67 @@ const TodolistEditingBlock = (props) => {
         <BeMiddle>
             <TodolistEditingContent>
                 <Form>
-                    <Form.Group widths='equal'>
-                        <Form.Field
-                            id='form-input-control-first-name'
-                            control={Input}
-                            label='Task title'
-                            placeholder='Remember to do it!'
-                            error={{
-                                content: 'Please enter a task name',
-                                pointing: 'below',
-                            }}
-                        />
-                    </Form.Group>
+                    <Form.Field
+                        id='form-input-control-first-name'
+                        control={Input}
+                        label='Task Title'
+                        placeholder='Remember to do it!'
+                        error={{
+                            content: 'Please enter a task name',
+                            pointing: 'below',
+                        }}
+                        name="todoTitle"
+                        onChange={handleInputChange}
+                        value={taskInput.todoTitle}
+                    />
+                 
                     <Form.Field
                         id='form-textarea-control-opinion'
                         control={TextArea}
-                        label='Task content'
+                        label='Task Content'
                         placeholder='It is not neccessary'
+                        name="todoContext"
+                        onChange={handleInputChange}
+                        value={taskInput.todoContext}
+                    />
+                    <Form.Group inline>
+                    <label>Quantity</label>
+                    <Form.Field
+                        control={Radio}
+                        label='Common'
+                        value='common'
+                        name="todoLevel"
+                        checked={taskInput.todoLevel === 'common'}
+                        onChange={handleInputChange}
                     />
                     <Form.Field
-                        control={Select}
-                        options={genderOptions}
-                        label={{ children: 'Task Levels', htmlFor: 'form-select-control-gender' }}
-                        placeholder='Task Levels'
-                        search
-                        searchInput={{ id: 'form-select-control-gender' }}
+                        control={Radio}
+                        label='Important'
+                        value='important'
+                        name="todoLevel"
+                        checked={taskInput.todoLevel === 'important'}
+                        onChange={handleInputChange}
                     />
                     <Form.Field
-                        control={Select}
-                        options={genderOptions}
-                        label={{ children: 'Task Levels', htmlFor: 'form-select-control-gender' }}
-                        placeholder='Task Levels'
-                        search
-                        //searchInput={{ id: 'form-select-control-gender' }}
+                        control={Radio}
+                        label='Record'
+                        value='record'
+                        name="todoLevel"
+                        checked={taskInput.todoLevel === 'record'}
+                        onChange={handleInputChange}
                     />
+                    </Form.Group>
                     <Form.Field
                         id='form-button-control-public'
                         control={Button}
                         content='Send'
+                        onClick={()=>props.handlePost(taskInput)}
                     />
                     <Form.Field
                         id='form-button-control-public'
                         control={Button}
                         content='Cancel' 
-                        onClick={props.handleEditing}                  
+                        onClick={props.handleEditing}         
                     />
                 </Form>
             </TodolistEditingContent>
@@ -209,10 +231,10 @@ const TodolistCard = (props) => {
     return (
         <TodolistCardContent>
             <TodolistTitle>
-                {props.taskTitle}
+                {props.todoTitle}
             </TodolistTitle>
             <TodolistContent>
-                {props.taskContent}
+                {props.todoContext}
             </TodolistContent>
             <TodolistOptionsBar>
                 <Button animated='vertical'>
@@ -245,26 +267,35 @@ const Todolist = (props) => {
     const handleEditing = () => {
         setIsInputing(!isInputing)
     }
+
+    const handlePost = (inputTask) => {
+        props.postTodolistData(inputTask)
+    }
     
+    const todolistData = props.todolistData.data
+
     useEffect(() => {
         props.getTodolistData()
     },[])
 
-    const todolistData = props.todolistData.data
-    console.log(todolistData)
+    
+
+    
+    console.log(props)
 
     return (
         <TodolistWrapper isInputing={isInputing}>
-        {isInputing && <TodolistEditingBlock handleEditing={handleEditing} />}
+        {isInputing && <TodolistEditingBlock handleEditing={handleEditing} handlePost={handlePost} />}
         <TodolistBlockContent>
             <TodolistBar handleEditing={handleEditing} isInputing={isInputing} />
             <TodoBlock>
+                <input type="button" onClick={()=>{handlePost('ar')}} />
                 {!todolistData? 'loading' : 
                     todolistData.map(item=>{
                         if(!item.todoStatus) {
                             return (<TodolistCard
-                                taskTitle={item.todoTitle}
-                                taskContent={item.todoComment}
+                                todoTitle={item.todoTitle}
+                                todoContext={item.todoComment}
                             />)
                         }
                     })}
@@ -274,8 +305,8 @@ const Todolist = (props) => {
                     todolistData.map(item=>{
                         if(item.todoStatus) {
                             return ( <TodolistCard
-                                taskTitle={item.todoTitle}
-                                taskContent={item.todoComment}
+                                todoTitle={item.todoTitle}
+                                todoContext={item.todoComment}
                             />)
                         }
                     })}

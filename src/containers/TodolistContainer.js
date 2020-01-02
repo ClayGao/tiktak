@@ -16,8 +16,9 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-      getTodolistData : () => {
-          dispatch(actions.getTodolistData())
+      getTodolistData : () => {dispatch(actions.getTodolistData())},
+      postTodolistData : (inputData) => {
+        dispatch(actions.postTodolistData(inputData))
       }
     }
 }
