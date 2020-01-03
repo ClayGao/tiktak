@@ -15,4 +15,6 @@ export const postTodolistDataAPI = (inputData) => axios.post('http://claygao.web
 
 export const deleteTodolistDataAPI = (taskId) => axios.delete('http://claygao.website/todolist/models/todo_API.php?taskid='+taskId)
 
+export const patchTodolistDataAPI = (taskId) => axios.patch('http://claygao.website/todolist/models/todo_API.php?taskid='+taskId)
+
 //// http://claygao.website/todolist/models/todo_API.php <=== Todolist API

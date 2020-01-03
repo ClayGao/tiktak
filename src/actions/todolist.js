@@ -38,3 +38,16 @@ export const deleteTodolistDataDone = () => {
         type: actionTypes.DELETE_TODOLIST_DATA_SUCCESS
     }
 }
+
+export const patchTodolistData = (taskId) => {
+    return {
+        type: actionTypes.PATCH_TODOLIST_DATA,
+        data: taskId
+    }
+}
+
+export const patchTodolistDataDone = () => {
+    return {
+        type: actionTypes.PATCH_TODOLIST_DATA_SUCCESS
+    }
+}

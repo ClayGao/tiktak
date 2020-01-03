@@ -4,7 +4,8 @@ import {
     weatherSaga,
     getTodolistSaga,
     postTodolistSaga,
-    deleteTodolistSaga
+    deleteTodolistSaga,
+    patchTodolistSaga
 } from './saga'
 
 export function* watchWeatherSaga() {
@@ -23,4 +24,6 @@ export function* watchDeleteTodolistSaga() {
     yield takeEvery(actionTypes.DELETE_TODOLIST_DATA, deleteTodolistSaga)
 }
 
-
+export function* watchPatchTodolistSaga() {
+    yield takeEvery(actionTypes.PATCH_TODOLIST_DATA, patchTodolistSaga)
+}

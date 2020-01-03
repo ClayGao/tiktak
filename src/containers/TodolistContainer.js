@@ -1,5 +1,5 @@
 import React from 'react';
-import Todolist from '../components/wrapper/todolist/index'
+import Todolist from '../components/todolist/index'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom';
 import * as actions from '../actions/todolist'
@@ -16,12 +16,15 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-      getTodolistData : () => {dispatch(actions.getTodolistData())},
-      postTodolistData : (inputData) => {
+      getTodolistData: () => {dispatch(actions.getTodolistData())},
+      postTodolistData: (inputData) => {
         dispatch(actions.postTodolistData(inputData))
       },
-      deleteTodolistData : (taskId) => {
+      deleteTodolistData: (taskId) => {
         dispatch(actions.deleteTodolistData(taskId))
+      },
+      patchTodolistData: (taskId) => {
+        dispatch(actions.patchTodolistData(taskId))
       }
     }
 }

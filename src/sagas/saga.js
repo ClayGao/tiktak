@@ -27,8 +27,14 @@ export function* postTodolistSaga(action) {
 }
 
 export function* deleteTodolistSaga(action) {
-    console.log(action.data)
     yield call(WebAPI.deleteTodolistDataAPI, action.data)
+    // 再次觸發 watcher 使其重新發 ajax
+    yield put(todolistActions.getTodolistData())
+}
+
+export function* patchTodolistSaga(action) {
+    console.log(action.data)
+    yield call(WebAPI.patchTodolistDataAPI, action.data)
     // 再次觸發 watcher 使其重新發 ajax
     yield put(todolistActions.getTodolistData())
 }

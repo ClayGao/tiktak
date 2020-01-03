@@ -3,7 +3,8 @@ import  {
   watchWeatherSaga,
   watchGetTodolistSaga,
   watchPostTodolistSaga,
-  watchDeleteTodolistSaga
+  watchDeleteTodolistSaga,
+  watchPatchTodolistSaga
 } from './wather'
 
 function* rootSaga() {
@@ -11,7 +12,8 @@ function* rootSaga() {
     watchWeatherSaga(),
     watchGetTodolistSaga(),
     watchPostTodolistSaga(),
-    watchDeleteTodolistSaga()
+    watchDeleteTodolistSaga(),
+    watchPatchTodolistSaga()
   ]);
 }
 

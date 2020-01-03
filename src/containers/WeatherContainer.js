@@ -1,5 +1,5 @@
 import React from 'react';
-import Weather from '../components/wrapper/weather/index'
+import Weather from '../components/weather/index'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom';
 import * as actions from '../actions/weather'

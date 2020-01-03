@@ -1,5 +1,5 @@
 import React from 'react';
-import Dashboard from '../components/wrapper/dashboard/index'
+import Dashboard from '../components/dashboard/index'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom';
 //import * as actions from '../actions/dashboard'
